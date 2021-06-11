@@ -23,11 +23,7 @@ export default {
     options: function(){
       const city = []
       this.city.forEach(v => {
-        city.push({
-          text: v.name,
-          value: {lat: v.lat, lon: v.lon},
-          disabled: (v.lat && v.lon) ? false : true
-          }) 
+        city.push({ text: v.name, value: {lat: v.lat, lon: v.lon}, disabled: (v.lat && v.lon) ? false : true }) 
       })
       return city
     }

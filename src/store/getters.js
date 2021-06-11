@@ -1,5 +1,5 @@
 /* 
-component에서 변수를 호출하면, state의 변수를 전달하는 역할 
+Component에서 변수를 호출하면 state의 변수를 전달한다. 
 */
 export default {
   GET_DAILY(state){

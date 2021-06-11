@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  nema: 'Days',
+  name: 'Days',
   created() {
 		this.$store.dispatch('ACT_DAYS', null)
 	}

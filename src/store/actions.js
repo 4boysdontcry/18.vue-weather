@@ -1,7 +1,7 @@
 /* 
-실제 값을 가져와서 mutation에 등록된 함수를 실행 한다. -> mutation의 값이 변화된다.
+서버에서 실제 값을 가져와서 mutation에 등록된 함수를 실행 한다. -> mutation의 state 값이 변한다.
 */
-import getWeather from '../api/weather-api'
+import getWeather from '../api/weather-api'   // weather-api를 돌려서 데이터를 가져온다.
 
 export default {
   async ACT_DAILY({ commit }, v){
@@ -11,7 +11,6 @@ export default {
     catch(err){
       console.log(err)
     }
-    commit('MUT_DAILY', v)
   },
   
   async ACT_DAYS({ commit }, v){
@@ -21,6 +20,5 @@ export default {
     catch(err){
       console.log(err)
     }
-    commit('MUT_DAYS', v)
   },
 }
