@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './router'		// router/index.js 에서 export한 라우터를 불러옴
 import store from './store'
 
 import 'bootstrap-icons/font/bootstrap-icons.css'

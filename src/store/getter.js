@@ -1,0 +1,17 @@
+/* 
+component에서 변수를 호출하면, state의 변수를 전달하는 역할 
+*/
+export default {
+  GET_CITY(state){
+    return state.selectedCity;
+  },
+  GET_DAILY(state){
+    return state.daily;
+  },
+  GET_DAYS(state){
+    return state.days;
+  },
+  GET_COORDS(state){
+    return state.coords;
+  },
+}

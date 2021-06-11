@@ -1,3 +1,4 @@
+// 라우터를 만들어서 export 해줌
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Daily from '../views/Daily.vue'
