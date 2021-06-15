@@ -5,7 +5,8 @@
 <script>
 /* 
 wind:{
-
+	deg: 270,
+	speed: 3.5
 }
 */
 

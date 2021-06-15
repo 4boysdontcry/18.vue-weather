@@ -1,7 +1,7 @@
 <template>
-  <h2 class="icon-wrap" :style="style">
+  <div>
 		<img :src="src" alt="" class="w-100">
-	</h2>
+	</div>
 </template>
 
 <script>

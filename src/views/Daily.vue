@@ -4,10 +4,12 @@
     <Date :date="date" />
 		<b-form-select class="city-select" v-model="selected" :options="options" size="lg" />
 		<b-button variant="dark" @click="dispatchWeather">현재위치의 날씨 정보 확인</b-button>
-    <Icon :icon="icon" :width="width" />
-    <Temp :temp="temp" />
-    <Description :main="main" :description="description" />
-    <Wind :wind="wind" :key="GET_DAILY.dt" />
+    <div class="daily-wrap">
+    	<Icon class="icon-wrap" :icon="icon" />
+	    <Temp class="temp-wrap" :temp="temp" />
+	    <Description class="desc-wrap" :main="main" :description="description" />
+	    <Wind class="wind-wrap" :wind="wind" :key="GET_DAILY.dt" />
+    </div>
 	</div>
 </template>
 
@@ -30,7 +32,6 @@ export default {
 		return {
 			city: [],
 			selected: '',
-      width: '120px',
 		}
 	},
 	props: ['data'], // 부모가 전해준 변수
@@ -132,6 +133,16 @@ export default {
 		.city-select {
 			width: 50%;
 			margin: 1em auto;
+		}
+		.daily-wrap {
+			@include flex($ST,$CT);
+			@include flexCol;
+			font-size: 1.5em;
+			margin-top: 1em;
+			.icon-wrap {width: 120px; margin: .5em 0;}
+			.temp-wrap {margin: .5em 0; font-weight: 700;}
+			.desc-wrap {margin: .25em 0;}
+			.wind-wrap {margin: .25em 0;}
 		}
 	}
 </style>
