@@ -64,8 +64,9 @@ export default {
 			width: 48%;
 		}
 		.icon {
-			width: 60px;
+			width: 80px;
 			margin: auto;
+      padding: 1em 0;
 		}
 		.content-wrap {
 			flex-grow: 1;

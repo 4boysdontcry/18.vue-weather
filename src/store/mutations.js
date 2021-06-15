@@ -13,4 +13,7 @@ export default {
   MUT_COORDS(state, v){
     state.coords = v;
   },
+  MUT_LOADING(state, v){
+    state.isLoading = v;
+  },
 }
