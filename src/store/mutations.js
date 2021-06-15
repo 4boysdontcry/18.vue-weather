@@ -7,6 +7,7 @@ export default {
     state.daily = v;
   },
   MUT_DAYS(state, v){
+    console.log(v)
     state.days = v;
   },
   MUT_COORDS(state, v){
