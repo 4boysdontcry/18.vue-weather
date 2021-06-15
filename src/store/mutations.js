@@ -9,4 +9,7 @@ export default {
   MUT_DAYS(state, v){
     state.days = v;
   },
+  MUT_COORDS(state, v){
+    state.coords = v;
+  },
 }

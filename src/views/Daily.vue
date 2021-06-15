@@ -1,15 +1,15 @@
 <template>
 	<div class="daily-wrapper">
-    <Title :cityName="cityName" />
-    <Date :date="date" />
+		<Title :cityName="cityName" />
+		<Date :date="date" />
 		<b-form-select class="city-select" v-model="selected" :options="options" size="lg" />
-		<b-button variant="dark" @click="dispatchWeather">현재위치의 날씨 정보 확인</b-button>
-    <div class="daily-wrap">
-    	<Icon class="icon-wrap" :icon="icon" />
-	    <Temp class="temp-wrap" :temp="temp" />
-	    <Description class="desc-wrap" :main="main" :description="description" />
-	    <Wind class="wind-wrap" :wind="wind" :key="GET_DAILY.dt" />
-    </div>
+		<b-button variant="dark" @click="onClick">현재위치의 날씨 정보 확인</b-button>
+		<div class="daily-wrap">
+			<Icon class="icon-wrap" :icon="icon" />
+			<Temp class="temp-wrap" :temp="temp" />
+			<Description class="desc-wrap" :main="main" :description="description" />
+			<Wind class="wind-wrap" :wind="wind" :key="GET_DAILY.dt" />
+		</div>
 	</div>
 </template>
 
@@ -26,7 +26,7 @@ import Wind from '../components/Wind.vue'
 
 export default {
 	name: 'Daily',
-  components: { Title, Icon, Temp, Date, Description, Wind },
+	components: { Title, Icon, Temp, Date, Description, Wind },
 	data() {
 		// 현재 컴포넌트에서 쓰일 변수를 등록하는 곳
 		return {
@@ -51,75 +51,77 @@ export default {
 			})
 			return city
 		},
-		
-    cityName: function() {
-			return this.GET_DAILY ? this.GET_DAILY.name : ''
+		...mapGetters(['GET_DAILY', 'GET_COORDS']),
+		cityName: function() {
+			// return this.GET_DAILY ? this.GET_DAILY.name : ''
+			return this.getValue(this.GET_DAILY, 'name')
 		},
-		
-    ...mapGetters(['GET_DAILY']),
-    cityName : function(){
-      // return this.GET_DAILY ? this.GET_DAILY.name : ''
-      return this.getValue(this.GET_DAILY, 'name')
-    },
-    
-    icon: function(){
-      // return this.GET_DAILY && this.GET_DAILY.weather ? this.GET_DAILY.weather[0].icon : null
-      return this.getValue(this.GET_DAILY, 'weather', 'icon')
-    },
-    temp: function(){
-      return this.getValue(this.GET_DAILY, 'main', 'temp')
-    },
-    date: function (){
-      return this.getValue(this.GET_DAILY, 'dt')
-    },
-		main: function(){
+		icon: function() {
+			// return this.GET_DAILY && this.GET_DAILY.weather ? this.GET_DAILY.weather[0].icon : null
+			return this.getValue(this.GET_DAILY, 'weather', 'icon')
+		},
+		temp: function() {
+			return this.getValue(this.GET_DAILY, 'main', 'temp')
+		},
+		date: function() {
+			return this.getValue(this.GET_DAILY, 'dt')
+		},
+		main: function() {
 			return this.getValue(this.GET_DAILY, 'weather', 'main')
 		},
-		description: function(){
+		description: function() {
 			return this.getValue(this.GET_DAILY, 'weather', 'description')
 		},
-		wind: function(){
+		wind: function() {
 			return {
 				deg: this.getValue(this.GET_DAILY, 'wind', 'deg'),
 				speed: this.getValue(this.GET_DAILY, 'wind', 'speed')
 			}
 		}
 	},
-
 	watch: {
 		// 내가 변해서 다른 값들을 변하게 하려면 watch에 등록
 		// 선언되어 있는 변수의 값이 바뀌면 함수를 실행한다.
 		selected: function(v, ov) {
-			this.dispatchWeather(v)
+			this.dispatchWeather(v) 
 		},
-		GET_DAILY: function(v, ov) {
-			console.log(v)
-		}
 	},
-
 	async created() {	// 자신이 실행될 때 한 번 실행한다.
-		this.dispatchWeather()	// 현재위치의 날씨정보를 가져와.
+		// console.log('created')
+		// console.log(this.GET_COORDS)
+		this.dispatchWeather(this.GET_COORDS)
 		const { data } = await axios.get('/json/city.json') // 도시정보를 가져와.
 		this.city = data.city
 	},
-
+	updated() {
+		// console.log('updated')
+		this.selected = this.GET_COORDS
+	},
+	mounted() {
+		// console.log('mounted')
+	},
+	destroyed() {
+		// console.log('destroyed')
+	},
 	methods: {
-    onClick(e){
-      this.dispatchWeather()
-    },
-    dispatchWeather(v = null){
-    // select의 값이 변하면 날씨정보를 요청하는 로직
-      this.$store.dispatch('ACT_DAILY', v)
-    },
-    getValue(obj, field, field2=null){
-      return obj && obj[field]
-            ? field2
-              ? Array.isArray(obj[field]) 
-                ? obj[field][0][field2]
-                : obj[field][field2]
-              : obj[field]
-            : ''
-    },
+		onClick(e) {
+			this.selected = ''
+			this.dispatchWeather()
+		},
+		dispatchWeather(v = null) {
+			// select의 값이 변하면 날씨정보를 요청하는 로직
+			this.$store.dispatch('ACT_DAILY', v)
+			this.$store.dispatch('ACT_COORDS', v)
+		},
+		getValue(obj, field, field2 = null) {
+			return obj && obj[field]
+							? field2 
+								? Array.isArray(obj[field]) 
+									? obj[field][0][field2]
+									: obj[field][field2]
+								: obj[field]
+							: ''
+		}
 	}
 }
 </script>
@@ -129,7 +131,6 @@ export default {
 		text-align: center;
 		@include flex($ST,$CT);
 		@include flexCol;
-		
 		.city-select {
 			width: 50%;
 			margin: 1em auto;
@@ -137,10 +138,10 @@ export default {
 		.daily-wrap {
 			@include flex($ST,$CT);
 			@include flexCol;
-			font-size: 1.5em;
 			margin-top: 1em;
-			.icon-wrap {width: 120px; margin: .5em 0;}
-			.temp-wrap {margin: .5em 0; font-weight: 700;}
+			font-size: 1.5em;
+			.icon-wrap {width:120px; margin: .5em 0;}
+			.temp-wrap {margin: .5em 0;}
 			.desc-wrap {margin: .25em 0;}
 			.wind-wrap {margin: .25em 0;}
 		}

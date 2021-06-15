@@ -5,6 +5,7 @@ export default : 익명의 객체로 내보냄 (받는 곳에서 아무 이름�
 */
 
 export default {
-	daily: null,
-	days: null,
+	daily: {},
+	days: {},
+	coords: null
 }
