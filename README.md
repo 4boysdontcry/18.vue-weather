@@ -16,6 +16,4 @@
 ### vue로 build하여 싱글페이지 안에서 화면이 바뀜
 ### openweathermap과 서버 통신
 ### vue-loading-overlay를 사용하여 화면이 변경될 경우 로딩바가 생김
-```bash
 ![로딩](https://user-images.githubusercontent.com/80312556/125055107-da51f600-e0e1-11eb-9e46-0e4fe53093ff.PNG)
-```
